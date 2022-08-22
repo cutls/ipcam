@@ -1,0 +1,35 @@
+<script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<div id="draggable"></div>
+<video id="video" controls autoplay></video>
+<button onclick="location.reload()">再読み込み</button>
+<button onclick="window.close()">閉じる</button>
+<script>
+    if (Hls.isSupported()) {
+        var video = document.getElementById('video')
+        var hls = new Hls()
+        hls.loadSource('http://localhost:8000/stream/index.m3u8')
+        hls.attachMedia(video)
+        hls.on(Hls.Events.MANIFEST_PARSED, function () {
+            video.play()
+        })
+    }
+</script>
+<style>
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    video {
+        width: 100vw;
+    }
+
+    #draggable {
+        -webkit-app-region: drag !important;
+        width: 100vw;
+        height: 30px;
+        background-color: #eee;
+    }
+</style>
