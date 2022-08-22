@@ -2,16 +2,38 @@
   "name": "ipcam",
   "version": "1.0.0",
   "license": "MIT",
-  "main": "build/index.js",
+  "main": "compiler/index.js",
   "scripts": {
     "build": "tsc",
-    "start": "tsc && electron ."
+    "start": "tsc && electron .",
+    "pack": "tsc && electron-builder --dir",
+    "dist": "tsc && electron-builder"
   },
   "devDependencies": {
     "@types/auto-launch": "^5.0.2",
     "@types/node": "^18.7.9",
     "auto-launch": "^5.0.5",
     "electron": "^20.0.3",
+    "electron-builder": "^23.3.3",
     "typescript": "^4.7.4"
+  },
+  "build": {
+    "productName": "ipcam",
+    "appId": "com.cutls.ipcam",
+    "directories": {
+      "output": "./pack"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "publish": []
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "ipcam.exe"
+    }
   }
 }

@@ -3,14 +3,6 @@ import { ChildProcessWithoutNullStreams, exec, spawn } from 'child_process'
 import fs from 'fs'
 import { join } from 'path'
 import server from './server'
-import AutoLaunch from 'auto-launch'
-
-const isDev = process.env.NODE_ENV === 'development'
-const launch = new AutoLaunch({ name: 'ipcam' })
-;(async () => {
-  const isEnabled = await launch.isEnabled()
-  !isDev && !isEnabled && launch.enable()
-})()
 
 function createWindow() {
   const options: Electron.BrowserWindowConstructorOptions = {
