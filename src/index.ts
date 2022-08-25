@@ -12,7 +12,9 @@ function createWindow() {
     frame: false,
   }
   const win = new BrowserWindow(options)
+  console.log('exec')
   ffmpeg()
+  console.log('created window')
   setTimeout(() => {
     win.loadFile(`public/index.html`)
     win.show()
@@ -27,7 +29,7 @@ function ffmpeg() {
   const logPath = join(app.getPath('userData'), 'log')
   console.log('get path')
   if (fs.existsSync(execCmdPath)) {
-    console.log('has fuke')
+    console.log('has file')
     const cmd = fs.readFileSync(execCmdPath).toString()
     const ffmpegLocation = fs.readFileSync(ffmpegPath).toString()
     const argstring = cmd
