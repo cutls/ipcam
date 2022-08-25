@@ -6,8 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "tsc && electron .",
-    "pack": "tsc && electron-builder --dir",
-    "dist": "tsc && electron-builder"
+    "pack": "tsc && electron-builder --dir --win",
+    "dist": "tsc && electron-builder --win"
   },
   "devDependencies": {
     "@types/auto-launch": "^5.0.2",
@@ -33,7 +33,7 @@
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
-      "artifactName": "ipcam.exe"
+      "artifactName": "ipcam-installer.exe"
     }
   }
 }

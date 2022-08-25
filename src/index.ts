@@ -23,23 +23,17 @@ let killTarget: ChildProcessWithoutNullStreams
 function ffmpeg() {
   const ffmpegPath = join(app.getPath('userData'), 'ffmpegPath')
   const execCmdPath = join(app.getPath('userData'), 'execCmd')
+  const logPath = join(app.getPath('userData'), 'log')
   if (fs.existsSync(execCmdPath)) {
     const cmd = fs.readFileSync(execCmdPath).toString()
     const ffmpegLocation = fs.readFileSync(ffmpegPath).toString()
-    /*
-    const execReturn = exec(cmd, (error, stdout, stderr) => {
-      if (error) {
-        console.error(`exec error: ${error}`)
-        ffmpeg()
-        return
-      }
-      console.log(`stdout: ${stdout}`)
-      console.error(`stderr: ${stderr}`)
-    })
-    */
     const argstring = cmd
     const args = argstring.split(' ')
     killTarget = spawn(ffmpegLocation, args, { detached: true })
+    killTarget.stdout.on('data', (data) => {
+      console.log(data.toString())
+      fs.appendFileSync(logPath, data.toString() + '!\n')
+    })
   } else {
     console.error(`No executable file! Check: ${execCmdPath}`)
   }
@@ -56,4 +50,9 @@ app.on('quit', cleanup)
 ffmpeg()
 const hostname = '127.0.0.1'
 const port = 8000
-server.listen(port, hostname)
+if (isDev()) {
+  server.listen(port, hostname)
+}
+function isDev() {
+  return process.mainModule?.filename.indexOf('app.asar') === -1;
+}
