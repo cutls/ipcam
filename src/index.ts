@@ -18,7 +18,7 @@ function createWindow() {
   setTimeout(() => {
     win.loadFile(`public/index.html`)
     win.show()
-  }, 5000)
+  }, 15000)
 }
 
 app.whenReady().then(createWindow)
