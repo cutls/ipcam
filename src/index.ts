@@ -12,6 +12,7 @@ function createWindow() {
     frame: false,
   }
   const win = new BrowserWindow(options)
+  ffmpeg()
   setTimeout(() => {
     win.loadFile(`public/index.html`)
     win.show()
@@ -53,7 +54,7 @@ process.on('SIGINT', cleanup)
 process.on('SIGTERM', cleanup)
 process.on('SIGQUIT', cleanup)
 app.on('quit', cleanup)
-ffmpeg()
+
 const hostname = '127.0.0.1'
 const port = 8000
 if (isDev()) {
