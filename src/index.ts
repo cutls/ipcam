@@ -25,7 +25,9 @@ function ffmpeg() {
   const ffmpegPath = join(app.getPath('userData'), 'ffmpegPath')
   const execCmdPath = join(app.getPath('userData'), 'execCmd')
   const logPath = join(app.getPath('userData'), 'log')
+  console.log('get path')
   if (fs.existsSync(execCmdPath)) {
+    console.log('has fuke')
     const cmd = fs.readFileSync(execCmdPath).toString()
     const ffmpegLocation = fs.readFileSync(ffmpegPath).toString()
     const argstring = cmd
