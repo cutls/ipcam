@@ -29,7 +29,9 @@ function ffmpeg() {
     const ffmpegLocation = fs.readFileSync(ffmpegPath).toString()
     const argstring = cmd
     const args = argstring.split(' ')
+    console.log(ffmpegLocation, args)
     killTarget = spawn(ffmpegLocation, args, { detached: true })
+    console.log('launched')
     killTarget.stdout.on('data', (data) => {
       console.log(data.toString())
       fs.appendFileSync(logPath, data.toString() + '!\n')
