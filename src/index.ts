@@ -34,6 +34,10 @@ function ffmpeg() {
       console.log(data.toString())
       fs.appendFileSync(logPath, data.toString() + '!\n')
     })
+    killTarget.stderr.on('data', (data) => {
+      console.log(data.toString())
+      fs.appendFileSync(logPath, data.toString() + '!\n')
+    })
   } else {
     console.error(`No executable file! Check: ${execCmdPath}`)
   }
