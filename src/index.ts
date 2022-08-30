@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, session } from 'electron'
 import { ChildProcessWithoutNullStreams, exec, spawn } from 'child_process'
 import fs from 'fs'
 import { join } from 'path'
@@ -49,8 +49,9 @@ function ffmpeg() {
     console.error(`No executable file! Check: ${execCmdPath}`)
   }
 }
-const cleanup = () => {
+const cleanup = async () => {
   console.log('clean uped')
+  await session.defaultSession.clearCache()
   killTarget.kill()
 }
 
