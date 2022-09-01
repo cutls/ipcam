@@ -1,10 +1,17 @@
 import { app, BrowserWindow, session } from 'electron'
 import { ChildProcessWithoutNullStreams, exec, spawn } from 'child_process'
 import fs from 'fs'
-import { join } from 'path'
+import path from 'path'
 import server from './server'
 
-function createWindow() {
+async function createWindow() {
+  await session.defaultSession.clearCache()
+  const publicPath = path.join(app.getPath('userData'), 'publicPath')
+  const dirPublic = fs.readFileSync(publicPath).toString()
+  const root = path.resolve(dirPublic)
+  const streamDir = path.join(root, 'stream', 'stream')
+  fs.unlinkSync(streamDir)
+  fs.mkdirSync(streamDir)
   const options: Electron.BrowserWindowConstructorOptions = {
     width: 600,
     height: 400,
@@ -24,14 +31,15 @@ function createWindow() {
 app.whenReady().then(createWindow)
 let killTarget: ChildProcessWithoutNullStreams
 function ffmpeg() {
-  const ffmpegPath = join(app.getPath('userData'), 'ffmpegPath')
-  const execCmdPath = join(app.getPath('userData'), 'execCmd')
-  const logPath = join(app.getPath('userData'), 'log')
+  const ffmpegPath = path.join(app.getPath('userData'), 'ffmpegPath')
+  const execCmdPath = path.join(app.getPath('userData'), 'execCmd')
+  const logPath = path.join(app.getPath('userData'), 'log')
   console.log('get path')
   if (fs.existsSync(execCmdPath)) {
     console.log('has file')
     const cmd = fs.readFileSync(execCmdPath).toString()
     const ffmpegLocation = fs.readFileSync(ffmpegPath).toString()
+    if (fs.existsSync(logPath)) fs.unlinkSync(logPath)
     const argstring = cmd
     const args = argstring.split(' ')
     console.log(ffmpegLocation, args)
@@ -51,7 +59,6 @@ function ffmpeg() {
 }
 const cleanup = async () => {
   console.log('clean uped')
-  await session.defaultSession.clearCache()
   killTarget.kill()
 }
 
