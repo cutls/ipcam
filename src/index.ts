@@ -16,7 +16,7 @@ async function createWindow() {
     width: 300,
     height: 200,
     show: false,
-    frame: false
+    frame: true
   }
   const win = new BrowserWindow(options)
   console.log('exec')
