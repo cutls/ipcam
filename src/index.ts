@@ -10,7 +10,7 @@ async function createWindow() {
   const dirPublic = fs.readFileSync(publicPath).toString()
   const root = path.resolve(dirPublic)
   const streamDir = path.join(root, 'stream', 'stream')
-  fs.unlinkSync(streamDir)
+  fs.rmdirSync(streamDir, { recursive: true })
   fs.mkdirSync(streamDir)
   const options: Electron.BrowserWindowConstructorOptions = {
     width: 600,
