@@ -2,12 +2,12 @@
 <div id="draggable"></div>
 <video id="video" controls autoplay></video>
 <button onclick="location.reload()">再読み込み</button>
-<button onclick="window.close()">閉じる</button>
+<button onclick="window.close()">終了</button>
 <script>
     if (Hls.isSupported()) {
         var video = document.getElementById('video')
         var hls = new Hls()
-        hls.loadSource('http://localhost:8000/stream/index.m3u8')
+        hls.loadSource(`http://localhost:8000/stream/index.m3u8?${new Date().getTime()}`)
         hls.attachMedia(video)
         hls.on(Hls.Events.MANIFEST_PARSED, function () {
             video.play()

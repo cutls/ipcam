@@ -13,10 +13,10 @@ async function createWindow() {
   fs.rmdirSync(streamDir, { recursive: true })
   fs.mkdirSync(streamDir)
   const options: Electron.BrowserWindowConstructorOptions = {
-    width: 600,
-    height: 400,
+    width: 300,
+    height: 200,
     show: false,
-    frame: false,
+    frame: false
   }
   const win = new BrowserWindow(options)
   console.log('exec')
